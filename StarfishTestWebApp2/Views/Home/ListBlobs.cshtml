@@ -1,0 +1,36 @@
+﻿@model Azure.Pageable<Azure.Storage.Blobs.Models.BlobItem>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    List all the blobs here.
+    
+    <table border="1">
+            <tr>
+                <th>File Name</th>
+                <th></th>
+            </tr>
+    @{
+        foreach (var blob in Model)
+        {
+            <tr>
+                <td>@blob.Name</td>
+                <td> @String.Concat(blob.Properties.ContentHash.Select(b => b.ToString("x2")))</td>
+            </tr>
+            Console.WriteLine(blob.Name);
+        }
+    }
+    
+    </table>
+</div>
+</body>
+</html>
