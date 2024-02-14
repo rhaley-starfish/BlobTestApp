@@ -13,6 +13,7 @@
     <ItemGroup>
       <PackageReference Include="Azure.Identity" Version="1.11.0-beta.1" />
       <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0-beta.1" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     </ItemGroup>
 
 </Project>

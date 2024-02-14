@@ -7,6 +7,8 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using StarfishTestWebApp2.Models;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace StarfishTestWebApp2.Controllers;
 
@@ -33,6 +35,32 @@ public class HomeController : Controller
         var list = blobStorage.GetBlobs();
         
         return View(list);
+    }
+
+    public IActionResult Database()
+    {
+        string constr = _conf.GetConnectionString("inmedix_v2");
+        var count = 0;
+        using (var conn = new SqlConnection(constr))
+        {
+            var cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select count(1) from INFORMATION_SCHEMA.COLUMNS";
+
+            try
+            {
+                cmd.Connection.Open();
+                count = (int)cmd.ExecuteScalar();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+        }
+        return View("Database",$"The total number of rows is {count}");
     }
     
     public IActionResult Privacy()
